@@ -1,14 +1,27 @@
-const socket = new WebSocket('ws://localhost:13000')
-
-let message = document.getElementById('message');
-
 let un = prompt('username');
 
-socket.onmessage = ({ data }) => {
-    console.log(data);
+let socket;
+
+
+if(un){
+    socket = new WebSocket('ws://localhost:13000');
+
+    socket.onmessage = ({ data }) => {
+        console.log(data);
+    }
+    
+    document.getElementById('send').addEventListener('click', () => {
+        //socket.send(`${un} : ${message.value}`);
+        const data = {
+            user: un,
+            action: 'change-room',
+            room: 'default',
+            newRoom: 'admin'
+        }
+    
+        socket.send(JSON.stringify(data));
+        message.value = '';
+    })
 }
 
-document.getElementById('send').addEventListener('click', () => {
-    socket.send(`${un} : ${message.value}`);
-    message.value = '';
-})
+let message = document.getElementById('message');
