@@ -1,10 +1,19 @@
 const WebSocket = require('ws');
-const server = new WebSocket.Server({ port: '13000'});
 
-server.on('connection', socket => {
+const WebSocketServer = new WebSocket.Server({ port: '13000' });
 
-    socket.on('message', message => {
-        socket.send(`User: ${message}`);
+WebSocketServer.on('connection', (WebSocket) => {
+
+    WebSocket.on('message', (data, isBinary) => {
+
+        WebSocketServer.clients.forEach((client) => {
+
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(data, { binary: isBinary });
+            }
+
+        })
+
     })
-
+    
 })

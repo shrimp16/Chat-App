@@ -4,7 +4,7 @@ let message = document.getElementById('message');
 
 socket.onmessage = ({ data }) => {
     console.log(data);
-} 
+}
 
 document.getElementById('send').addEventListener('click', () => {
     socket.send(message.value);
