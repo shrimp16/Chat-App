@@ -7,6 +7,10 @@ let rooms = {
     admin: []
 }
 
+function heartbeat() {
+    this.isAlive = true;
+}
+
 function getUniqueID() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -14,9 +18,9 @@ function getUniqueID() {
     return s4() + s4() + '-' + s4();
 };
 
-function broadcastTo(room, message, isBinary){
+function broadcastTo(room, message, isBinary) {
 
-    for(let i = 0; i < rooms[room].length; i++){
+    for (let i = 0; i < rooms[room].length; i++) {
         rooms[room][i].send(message, { binary: isBinary });
     }
 
@@ -24,22 +28,32 @@ function broadcastTo(room, message, isBinary){
 
 function changeRoom(room, newRoom, user) {
 
+    removeFromRoom(room, user);
+
+    rooms[newRoom].push(user);
+
+};
+
+function removeFromRoom(room, user){
+
     let usersCopy = rooms[room];
 
     usersCopy = usersCopy.filter(element => element.id !== user.id);
 
     rooms[room] = usersCopy;
 
-    rooms[newRoom].push(user);
-
-};
+}
 
 WebSocketServer.on('connection', (WebSocket) => {
 
     WebSocket.id = getUniqueID();
 
+    WebSocket.isAlive = true;
+
+    WebSocket.on('pong', heartbeat);
+
     rooms.room.push(WebSocket);
-    
+
     WebSocket.on('message', (data, isBinary) => {
 
         let JSONData = JSON.parse(data);
@@ -56,3 +70,18 @@ WebSocketServer.on('connection', (WebSocket) => {
     })
 
 })
+
+setInterval(() => {
+    WebSocketServer.clients.forEach((ws) => {
+        if (ws.isAlive === false) {
+
+            removeFromRoom(user, room);
+
+            return ws.terminate();
+
+        }
+
+        ws.isAlive = false;
+        ws.ping();
+    })
+}, 30000)
