@@ -8,11 +8,15 @@ if(un){
     socket = new WebSocket('ws://localhost:13000');
 
     socket.onmessage = ({ data }) => {
-        console.log(data);
+
+        if(data === 'Invalid room'){
+            room = 'room';
+        }
+
+        console.log(JSON.parse(data));
     }
     
     document.getElementById('send').addEventListener('click', () => {
-        //socket.send(`${un} : ${message.value}`);
         const data = {
             user: un,
             action: 'send-message',

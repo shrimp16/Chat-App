@@ -28,9 +28,16 @@ function broadcastTo(room, message, isBinary) {
 
 function changeRoom(room, newRoom, user) {
 
+    if(!rooms[newRoom]){
+        user.send('Invalid room');
+        return;
+    }
+
     removeFromRoom(room, user);
 
     rooms[newRoom].push(user);
+
+    console.log(rooms);
 
 };
 
