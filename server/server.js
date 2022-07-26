@@ -14,6 +14,14 @@ function getUniqueID() {
     return s4() + s4() + '-' + s4();
 };
 
+function broadcastTo(room, message, isBinary){
+
+    for(let i = 0; i < rooms[room].length; i++){
+        rooms[room][i].send(message, { binary: isBinary });
+    }
+
+}
+
 function changeRoom(room, newRoom, user) {
 
     let usersCopy = rooms[room];
@@ -24,7 +32,7 @@ function changeRoom(room, newRoom, user) {
 
     rooms[newRoom].push(user);
 
-}
+};
 
 WebSocketServer.on('connection', (WebSocket) => {
 
@@ -41,11 +49,7 @@ WebSocketServer.on('connection', (WebSocket) => {
                 changeRoom(JSONData.room, JSONData.newRoom, WebSocket);
                 break;
             case 'send-message':
-
-                for(let i = 0; i < rooms[JSONData.room].length; i++){
-                    rooms[JSONData.room][i].send(data, { binary: isBinary });
-                }
-
+                broadcastTo(JSONData.room, data, isBinary);
                 break;
 
         }
