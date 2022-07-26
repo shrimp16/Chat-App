@@ -15,8 +15,6 @@ let rooms = [
 
 function getRoomIndex(roomId) {
 
-    console.log(roomId);
-    
     for(let i = 0; i < rooms.length; i++){
         if(rooms[i].id === roomId){
             return i;
@@ -43,24 +41,19 @@ WebSocketServer.on('connection', (WebSocket) => {
     console.log(rooms);
     WebSocket.on('message', (data, isBinary) => {
 
-        //console.log(data.toJSON());
-
-
-
         let JSONData = JSON.parse(data);
 
-        console.log(JSONData);
-
         if (JSONData.action === 'change-room') {
-            console.log(getRoomIndex(JSONData.room));
+
             let usersCopy = rooms[getRoomIndex(JSONData.room)].users;
+
             usersCopy = usersCopy.filter(user => user !== WebSocket.id);
+
             rooms[getRoomIndex(JSONData.room)].users = usersCopy;
 
             rooms[getRoomIndex(JSONData.newRoom)].users.push(WebSocket.id);
-        }
 
-        console.log(WebSocket.id);
+        }
 
         WebSocketServer.clients.forEach((client) => {
 
