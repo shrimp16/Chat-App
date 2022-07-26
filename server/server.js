@@ -2,16 +2,10 @@ const WebSocket = require('ws');
 
 const WebSocketServer = new WebSocket.Server({ port: '13000' });
 
-let rooms = [
-    {
-        id: 'default',
-        users: []
-    },
-    {
-        id: 'admin',
-        users: []
-    }
-]
+let rooms = {
+    room: [],
+    admin: []
+}
 
 function getRoomIndex(roomId) {
 
@@ -34,13 +28,30 @@ function getUniqueID() {
 
 function changeRoom(room, newRoom, user) {
 
-    let usersCopy = rooms[getRoomIndex(room)].users;
+    console.log(room);
+    console.log(newRoom);
 
-    usersCopy = usersCopy.filter(user => user !== WebSocket.id);
+    let usersCopy = rooms[room];
 
-    rooms[getRoomIndex(room)].users = usersCopy;
+    usersCopy = usersCopy.filter(element => element.id !== user.id);
 
-    rooms[getRoomIndex(newRoom)].users.push(user);
+    rooms[room] = usersCopy;
+
+    rooms[newRoom].push(user);
+
+    console.log(rooms);
+
+}
+
+function isOnRoom(room, user) {
+
+    let userList = rooms[getRoomIndex(room)].users;
+
+    for (let i = 0; i < userList.length; i++) {
+        if (userList[i] === user.id) {
+            user.send('ayo lmao');
+        }
+    }
 
 }
 
@@ -48,26 +59,36 @@ WebSocketServer.on('connection', (WebSocket) => {
 
     WebSocket.id = getUniqueID();
 
-    rooms[0].users.push(WebSocket.id);
-
+    
+    rooms.room.push(WebSocket);
+    
     console.log(rooms);
+
     WebSocket.on('message', (data, isBinary) => {
 
         let JSONData = JSON.parse(data);
 
         switch (JSONData.action) {
             case 'change-room':
-                changeRoom(JSONData.room, JSONData.newRoom, WebSocket.id);
+                changeRoom(JSONData.room, JSONData.newRoom, WebSocket);
                 break;
+            case 'send-message':
+
+                for(let i = 0; i < rooms[JSONData.room].length; i++){
+                    rooms[JSONData.room][i].send(data, { binary: isBinary });
+                }
+
+                break;
+
         }
 
-        WebSocketServer.clients.forEach((client) => {
+        /*WebSocketServer.clients.forEach((client) => {
 
             if (client.readyState === WebSocket.OPEN) {
                 client.send(data, { binary: isBinary });
             }
 
-        })
+        })*/
 
     })
 
