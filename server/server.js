@@ -29,11 +29,12 @@ function broadcastTo(room, message, isBinary) {
 function createRoom(room, roomName, user) {
 
     if(!rooms[roomName]){
+
         rooms[roomName] = [];
         changeRoom(room, roomName, user);
-        console.log(rooms[roomName]);
         user.send('Created room');
         return;
+
     }
 
     user.send('Invalid room');
@@ -84,7 +85,7 @@ WebSocketServer.on('connection', (WebSocket) => {
                 broadcastTo(JSONData.room, data, isBinary);
                 break;
             case 'create-room':
-                createRoom(JSONData.room, JSONData.roomName, WebSocket);
+                createRoom(JSONData.room, JSONData.newRoom, WebSocket);
                 break;
 
         }

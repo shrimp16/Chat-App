@@ -54,14 +54,14 @@ if(un){
 
     document.getElementById('create').addEventListener('click', () => {
 
+        roomCreation = prompt('Room');
+
         const data = {
             user: un,
             action: 'create-room',
             room: room,
-            roomName: 'lmao-exdi'
+            newRoom: roomCreation
         }
-
-        roomCreation = 'lmao-exdi';
 
         socket.send(JSON.stringify(data));
     })
