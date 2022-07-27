@@ -44,6 +44,18 @@ if(un){
         
         socket.send(JSON.stringify(data));
     })
+
+    document.getElementById('create').addEventListener('click', () => {
+
+        const data = {
+            user: un,
+            action: 'create-room',
+            room: room,
+            roomName: 'lmao-exdi'
+        }
+
+        socket.send(JSON.stringify(data));
+    })
 }
 
 let message = document.getElementById('message');
