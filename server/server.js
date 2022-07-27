@@ -26,9 +26,17 @@ function broadcastTo(room, message, isBinary) {
 
 }
 
-function createRoom(roomName) {
-    rooms[roomName] = [];
-    console.log(rooms);
+function createRoom(room, roomName, user) {
+
+    if(!rooms[roomName]){
+        rooms[roomName] = [];
+        changeRoom(room, roomName, user);
+        console.log(rooms[roomName]);
+        user.send('Created room');
+        return;
+    }
+
+    user.send('Invalid room');
 }
 
 function changeRoom(room, newRoom, user) {
@@ -41,8 +49,6 @@ function changeRoom(room, newRoom, user) {
     removeFromRoom(room, user);
 
     rooms[newRoom].push(user);
-
-    console.log(rooms);
 
 };
 
@@ -78,8 +84,7 @@ WebSocketServer.on('connection', (WebSocket) => {
                 broadcastTo(JSONData.room, data, isBinary);
                 break;
             case 'create-room':
-                createRoom(JSONData.roomName);
-                changeRoom(JSONData.room, JSONData.roomName, WebSocket);
+                createRoom(JSONData.room, JSONData.roomName, WebSocket);
                 break;
 
         }

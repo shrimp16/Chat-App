@@ -4,16 +4,23 @@ let socket;
 
 let room = 'room';
 
+let roomCreation;
+
 if(un){
     socket = new WebSocket('ws://localhost:13000');
 
     socket.onmessage = ({ data }) => {
 
+        console.log(data);
+
         if(data === 'Invalid room'){
             room = 'room';
         }
 
-        console.log(JSON.parse(data));
+        if(data === 'Created room'){
+            room = roomCreation;
+        }
+
     }
     
     document.getElementById('send').addEventListener('click', () => {
@@ -53,6 +60,8 @@ if(un){
             room: room,
             roomName: 'lmao-exdi'
         }
+
+        roomCreation = 'lmao-exdi';
 
         socket.send(JSON.stringify(data));
     })
