@@ -1,0 +1,33 @@
+.home {
+    display: flex;
+    flex-direction: column;
+}
+
+.join-input {
+    outline: none;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 1.5rem;
+    width: 30%;
+    border: 2px blue solid;
+    border-radius: 5px;
+}
+
+.join-button {
+    margin: auto;
+    width: 10%;
+    font-size: 1.5rem;
+    border: 2px blue solid;
+    border-radius: 25px;
+    background-color: white;
+    color: blue;
+    cursor: pointer;
+    transition: 1s;
+
+    &:hover {
+        box-shadow: inset 0px 80px 0px blue;
+        color: white;
+    }
+
+}
