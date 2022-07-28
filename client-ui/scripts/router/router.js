@@ -2,7 +2,7 @@ const pages = [
     'home'
 ]
 
-export default class Router {
+export class Router {
 
     constructor() {
         window.addEventListener('hashchange', () => {
