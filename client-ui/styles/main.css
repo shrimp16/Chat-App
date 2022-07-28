@@ -45,4 +45,15 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+.app-title {
+  font-size: 5rem;
+  font-family: "Fredericka the Great", cursive;
+  background-image: linear-gradient(360deg, blue, black);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  padding: 10px;
 }/*# sourceMappingURL=main.css.map */
