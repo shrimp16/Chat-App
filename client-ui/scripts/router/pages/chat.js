@@ -15,27 +15,9 @@ export default class Chat {
                 <div class="message">
                     <p class="message-text">This is a message</p>
                 </div>
-                <div class="message">
-                    <p class="message-text">This is a message</p>
-                </div>
-                <div class="message">
-                    <p class="message-text">This is a message</p>
-                </div>
-                <div class="message">
-                    <p class="message-text">This is a message</p>
-                </div>
-                <div class="message">
-                    <p class="message-text">This is a message</p>
-                </div>
-                <div class="message">
-                    <p class="message-text">This is a message</p>
-                </div>
-                <div class="message">
-                    <p class="message-text">This is a message</p>
-                </div>
             </div>
             <div class="message-input">
-                <input type="text">
+                <input id="message-input" type="text">
                 <button id="send-message">Send</button>
             </div>
         `
