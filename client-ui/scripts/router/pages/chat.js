@@ -11,7 +11,29 @@ export default class Chat {
     loadPage() {
         
         this.body.innerHTML = `
-            <div class="message-container" id="message-container"></div>
+            <div class="message-container" id="message-container">
+                <div class="message">
+                    <p class="message-text">This is a message</p>
+                </div>
+                <div class="message">
+                    <p class="message-text">This is a message</p>
+                </div>
+                <div class="message">
+                    <p class="message-text">This is a message</p>
+                </div>
+                <div class="message">
+                    <p class="message-text">This is a message</p>
+                </div>
+                <div class="message">
+                    <p class="message-text">This is a message</p>
+                </div>
+                <div class="message">
+                    <p class="message-text">This is a message</p>
+                </div>
+                <div class="message">
+                    <p class="message-text">This is a message</p>
+                </div>
+            </div>
         `
 
     }
