@@ -34,6 +34,10 @@ export default class Chat {
                     <p class="message-text">This is a message</p>
                 </div>
             </div>
+            <div class="message-input">
+                <input type="text">
+                <button id="send-message">Send</button>
+            </div>
         `
 
     }

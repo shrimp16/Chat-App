@@ -1,5 +1,6 @@
 const pages = [
-    'home'
+    'home',
+    'chat'
 ]
 
 export class Router {
