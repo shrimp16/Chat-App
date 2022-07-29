@@ -12,6 +12,10 @@
     width: 30%;
     border: 2px blue solid;
     border-radius: 5px;
+
+    &::placeholder {
+        color: rgba(0, 0, 255, 0.5)
+    }
 }
 
 .join-button {

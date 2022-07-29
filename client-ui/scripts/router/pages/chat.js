@@ -17,7 +17,7 @@ export default class Chat {
                 </div>
             </div>
             <div class="message-input">
-                <input id="message-input" type="text">
+                <input id="message-input" placeholder="Message..." type="text">
                 <button id="send-message">Send</button>
             </div>
         `

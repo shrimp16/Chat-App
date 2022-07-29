@@ -26,6 +26,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
   line-height: 1;
+  background-color: whitesmoke;
 }
 
 ol, ul {
@@ -73,6 +74,15 @@ table {
   border: 2px blue solid;
   border-radius: 5px;
 }
+.join-input::-moz-placeholder {
+  color: rgba(0, 0, 255, 0.5);
+}
+.join-input:-ms-input-placeholder {
+  color: rgba(0, 0, 255, 0.5);
+}
+.join-input::placeholder {
+  color: rgba(0, 0, 255, 0.5);
+}
 
 .join-button {
   margin: auto;
@@ -95,15 +105,20 @@ table {
   width: 50vh;
   margin: auto;
   margin-top: 0.5rem;
-  border: 1px black solid;
   overflow: scroll;
+  scrollbar-width: none;
+}
+.message-container::-webkit-scrollbar {
+  display: none;
 }
 
 .message {
   height: 20%;
   width: 90%;
   text-align: center;
-  background-color: lightblue;
+  background-color: rgba(0, 0, 255, 0.4);
+  border: 2px blue solid;
+  color: white;
   border-radius: 10px;
   margin: auto;
   margin-bottom: 1rem;
@@ -115,10 +130,10 @@ table {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 1.2rem;
 }
 
 .message-input {
-  border: 1px black solid;
   width: 70vh;
   display: flex;
   flex-direction: column;
@@ -127,6 +142,20 @@ table {
 }
 .message-input * {
   font-size: 1.25rem;
+}
+.message-input input {
+  outline: none;
+  border: 2px blue solid;
+  border-radius: 10px;
+}
+.message-input input::-moz-placeholder {
+  color: rgba(0, 0, 255, 0.5);
+}
+.message-input input:-ms-input-placeholder {
+  color: rgba(0, 0, 255, 0.5);
+}
+.message-input input::placeholder {
+  color: rgba(0, 0, 255, 0.5);
 }
 .message-input button {
   margin: auto;
