@@ -50,6 +50,11 @@ export default class Chat {
         }
 
         document.getElementById('send-message').addEventListener('click', () => {
+            
+            if(document.getElementById('message-input').value === ''){
+                return;
+            }
+            
             const data = {
                 user: sessionStorage.getItem('username'),
                 action: 'send-message',
