@@ -13,7 +13,7 @@ export default class Chat {
     }
 
     loadPage() {
-        
+
         this.body.innerHTML = `
             <div class="message-container" id="message-container">
                 <div class="message">
@@ -28,12 +28,25 @@ export default class Chat {
 
     }
 
-    prepareElements(){
+    prepareElements() {
 
         const socket = new WebSocket('ws://localhost:13000');
 
+        let scroll = 100;
+
         socket.onmessage = ({ data }) => {
-            console.log(data);
+            let JSONData = JSON.parse(data);
+            document.getElementById('message-container').innerHTML += `
+                <div class="message">
+                    <p class="message-text">${JSONData.message}</p>
+                </div>
+            `
+
+            document.getElementById('message-container').scroll({
+                top: scroll,
+            });
+
+            scroll += 100;
         }
 
         document.getElementById('send-message').addEventListener('click', () => {
