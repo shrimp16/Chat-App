@@ -5,6 +5,10 @@ export default class Chat {
         this.body = document.getElementById('body');
 
         this.loadPage();
+        this.prepareElements();
+
+        this.currentRoom = 'room';
+        this.roomCreation = 'room';
 
     }
 
@@ -22,6 +26,27 @@ export default class Chat {
             </div>
         `
 
+    }
+
+    prepareElements(){
+
+        const socket = new WebSocket('ws://localhost:13000');
+
+        socket.onmessage = ({ data }) => {
+            console.log(data);
+        }
+
+        document.getElementById('send-message').addEventListener('click', () => {
+            const data = {
+                user: sessionStorage.getItem('username'),
+                action: 'send-message',
+                message: document.getElementById('message-input').value,
+                room: this.currentRoom
+            }
+
+            socket.send(JSON.stringify(data));
+            document.getElementById('message-input').value = '';
+        })
     }
 
 }
