@@ -32,13 +32,13 @@ export default class Chat {
 
         const socket = new WebSocket('ws://localhost:13000');
 
-        let scroll = 100;
+        let scroll = 200;
 
         socket.onmessage = ({ data }) => {
             let JSONData = JSON.parse(data);
             document.getElementById('message-container').innerHTML += `
                 <div class="message">
-                    <p class="message-text">${JSONData.message}</p>
+                    <p class="message-text">${JSONData.user} : ${JSONData.message}</p>
                 </div>
             `
 
@@ -46,7 +46,7 @@ export default class Chat {
                 top: scroll,
             });
 
-            scroll += 100;
+            scroll += 200;
         }
 
         document.getElementById('send-message').addEventListener('click', () => {
