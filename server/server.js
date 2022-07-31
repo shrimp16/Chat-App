@@ -2,11 +2,6 @@ const WebSocket = require('ws');
 
 const WebSocketServer = new WebSocket.Server({ port: '13000' });
 
-let rooms = {
-    room: [],
-    admin: []
-}
-
 function heartbeat() {
     this.isAlive = true;
 }
@@ -23,43 +18,6 @@ function broadcastTo(room, message, isBinary) {
     for (let i = 0; i < rooms[room].length; i++) {
         rooms[room][i].send(message, { binary: isBinary });
     }
-
-}
-
-function createRoom(room, roomName, user) {
-
-    if(!rooms[roomName]){
-
-        rooms[roomName] = [];
-        changeRoom(room, roomName, user);
-        user.send('Created room');
-        return;
-
-    }
-
-    user.send('Invalid room');
-}
-
-function changeRoom(room, newRoom, user) {
-
-    if(!rooms[newRoom]){
-        user.send('Invalid room');
-        return;
-    }
-
-    removeFromRoom(room, user);
-
-    rooms[newRoom].push(user);
-
-};
-
-function removeFromRoom(room, user){
-
-    let usersCopy = rooms[room];
-
-    usersCopy = usersCopy.filter(element => element.id !== user.id);
-
-    rooms[room] = usersCopy;
 
 }
 
