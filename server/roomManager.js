@@ -5,6 +5,10 @@ class RoomManager {
             room: []
         }
     }
+    
+    addUserToRoom(room, user){
+        this.rooms[room].push(user);
+    }
 
     createRoom(room, roomName, user) {
 
@@ -42,4 +46,10 @@ class RoomManager {
         rooms[newRoom].push(user);
     
     };
+
+    getRooms(){
+        return this.rooms;
+    }
 }
+
+module.exports = RoomManager;

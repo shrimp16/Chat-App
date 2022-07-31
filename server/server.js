@@ -2,6 +2,9 @@ const WebSocket = require('ws');
 
 const WebSocketServer = new WebSocket.Server({ port: '13000' });
 
+const RoomManager = require('./roomManager');
+const roomManager = new RoomManager();
+
 function heartbeat() {
     this.isAlive = true;
 }
@@ -14,6 +17,8 @@ function getUniqueID() {
 };
 
 function broadcastTo(room, message, isBinary) {
+
+    let rooms = roomManager.getRooms();
 
     for (let i = 0; i < rooms[room].length; i++) {
         rooms[room][i].send(message, { binary: isBinary });
@@ -29,7 +34,7 @@ WebSocketServer.on('connection', (WebSocket) => {
 
     WebSocket.on('pong', heartbeat);
 
-    rooms.room.push(WebSocket);
+    roomManager.addUserToRoom('room', WebSocket);
 
     WebSocket.on('message', (data, isBinary) => {
 
@@ -37,13 +42,13 @@ WebSocketServer.on('connection', (WebSocket) => {
 
         switch (JSONData.action) {
             case 'change-room':
-                changeRoom(JSONData.room, JSONData.newRoom, WebSocket);
+                roomManager.changeRoom(JSONData.room, JSONData.newRoom, WebSocket);
                 break;
             case 'send-message':
                 broadcastTo(JSONData.room, data, isBinary);
                 break;
             case 'create-room':
-                createRoom(JSONData.room, JSONData.newRoom, WebSocket);
+                roomManager.createRoom(JSONData.room, JSONData.newRoom, WebSocket);
                 break;
 
         }
