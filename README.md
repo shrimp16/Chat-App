@@ -1,5 +1,13 @@
-# JavaScript-WebSockets
+# Chat-App
 
-Simple project to try out web sockets implementations with JavaScript
+Simple chat application that currently puts all the users on the same room where they can chat.
 
-Currently has a little chat app inside, made with the WS npm package and the default WebSockets from the browser
+# Technologies
+
+  - VSCode
+  - JavaScript
+  - WebSockets
+  - HTML
+  - Sass
+  
+# UI Screenshots
